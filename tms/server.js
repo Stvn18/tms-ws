@@ -28,18 +28,23 @@ app.use(`${appConfig.context}/api`, router);
 
 require('./routes/user.route')(router);
 require('./routes/auth.route')(router);
+require('./routes/trunk.route')(router);
+require('./routes/pilot.route')(router);
+require('./routes/location.route')(router);
+require('./routes/package.route')(router);
+require('./routes/shipping.route')(router);
 
- /**
-  * Start
-  */
+/**
+ * Start
+ */
 app.listen(appConfig.port);
 
- // Not found
-app.use((req, res, next) => next({statusCode: 404, message: ''}));
- 
- // Error Handler
- app.use((err, req, res, next) => {
+// Not found
+app.use((req, res, next) => next({ statusCode: 404, message: '' }));
+
+// Error Handler
+app.use((err, req, res, next) => {
 	console.error(err.message);
 	if (!err.statusCode) err.statusCode = 500;
 	res.status(err.statusCode).send(err.message);
- });
+});
