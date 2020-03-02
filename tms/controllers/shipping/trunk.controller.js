@@ -1,8 +1,8 @@
 'use strict';
 
-const Trunk = require('../models/Trunk');
-const Pilot = require('../models/Pilot');
-const logService = require('../services/log.service');
+const Trunk = require('../../models/shipping/Trunk');
+const Pilot = require('../../models/shipping/Pilot');
+const logService = require('../../services/log.service');
 
 exports.createTrunk = async (req, res, next) => {
     if (!req.body || req.params) {

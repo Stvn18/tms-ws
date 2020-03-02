@@ -1,5 +1,5 @@
-const authCtrl = require('../controllers/auth.controller');
-const security = require('../config/security');
+const authCtrl = require('../../controllers/auth/auth.controller');
+const security = require('../../config/security');
 
 module.exports = ( router ) => {
     router.post('/auth/login', authCtrl.authenticateUser);

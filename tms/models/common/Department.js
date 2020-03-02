@@ -3,6 +3,10 @@ const Schema = mongoose.Schema
 mongoose.set('useCreateIndex', true)
 
 const departmentSchema = new Schema({
+    code: {
+        type: String,
+        trim: true
+    },
     name: {
         type: String,
         required: true,

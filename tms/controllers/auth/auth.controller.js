@@ -2,12 +2,12 @@
 
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const User = require('../models/User');
-const AccessToken = require('../models/AccessToken');
-const Log = require('../models/Log');
-const logService = require('../services/log.service');
+const User = require('../../models/auth/User');
+const AccessToken = require('../../models/auth/AccessToken');
+const Log = require('../../models/auth/Log');
+const logService = require('../../services/log.service');
 
-const { authConfig } = require('../config/app');
+const { authConfig } = require('../../config/app');
 
 exports.authenticateUser = (req, res, next) => {
     const userData = {

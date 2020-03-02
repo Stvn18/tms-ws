@@ -1,8 +1,8 @@
 'use strict';
 
 const jwt = require('jsonwebtoken');
-const AccessToken = require('../models/AccessToken');
-const { authConfig } = require('../config/app');
+const AccessToken = require('../models/auth/AccessToken');
+const { authConfig } = require('./app');
 
 exports.validateToken = (req, _, next) => {
     const token = req.headers['authorization'];

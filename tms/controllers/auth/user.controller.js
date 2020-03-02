@@ -1,6 +1,6 @@
 'use strict';
 
-const User = require('../models/User');
+const User = require('../../models/auth/User');
 const bcrypt = require('bcryptjs');
 
 exports.createUser = (req, res, next) => {

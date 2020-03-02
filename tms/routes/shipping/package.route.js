@@ -1,5 +1,5 @@
-const packageCtrl = require('../controllers/package.controller');
-const security = require('../config/security');
+const packageCtrl = require('../../controllers/shipping/package.controller');
+const security = require('../../config/security');
 
 module.exports = ( router ) => {
     router.post('/package/register', security.validateToken, packageCtrl.createPackage);

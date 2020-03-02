@@ -1,7 +1,7 @@
 'use strict';
 
-const Package = require('../models/Package');
-const logService = require('../services/log.service');
+const Package = require('../../models/shipping/Package');
+const logService = require('../../services/log.service');
 
 exports.createPackage = async (req, res, next) => {
     if (!req.body) return next({ statusCode: 400, message: 'Datos incompletos' });

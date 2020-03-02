@@ -1,5 +1,5 @@
-const shippingCtrl = require('../controllers/shipping.controller');
-const security = require('../config/security');
+const shippingCtrl = require('../../controllers/shipping/shipping.controller');
+const security = require('../../config/security');
 
 module.exports = (router) => {
     router.post('/shipping', security.validateToken, shippingCtrl.registerShipping);

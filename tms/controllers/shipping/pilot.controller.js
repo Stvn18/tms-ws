@@ -1,7 +1,7 @@
 'use strict';
 
-const Pilot = require('../models/Pilot');
-const logService = require('../services/log.service');
+const Pilot = require('../../models/shipping/Pilot');
+const logService = require('../../services/log.service');
 
 exports.createPilot = async (req, res, next) => {
     if ( !req.body ) {

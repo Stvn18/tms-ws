@@ -1,9 +1,9 @@
 'use strict';
 
-const Shipping = require('../models/Shipping');
-const Trunk = require('../models/Trunk');
-const Location = require('../models/Location');
-const Package = require('../models/Package');
+const Shipping = require('../../models/shipping/Shipping');
+const Trunk = require('../../models/shipping/Trunk');
+const Package = require('../../models/shipping/Package');
+const Location = require('../../models/common/Location');
 
 const logService = require('../services/log.service');
 
@@ -49,6 +49,10 @@ exports.registerShipping = async (req, res, next) => {
             packages
         });
         await shipping.save();
+
+        // Agrega un nuevo envío al camión
+        trunkSaved.shippings.push(shipping);
+        await trunkSaved.save();
 
         logService.saveLog(req, `Registró el envío No. ${shipping._id} en el sistema con destino a ${destinationSaved.comments}`);
 

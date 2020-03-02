@@ -1,5 +1,5 @@
-const mongoose = require('mongoose')
-const { dataBaseConfig } = require('../config/app')
+const mongoose = require('mongoose');
+const { dataBaseConfig } = require('./app');
 
 module.exports = () => {
     mongoose

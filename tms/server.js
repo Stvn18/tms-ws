@@ -26,13 +26,13 @@ app.use(bparser.urlencoded({ extended: false }));
  */
 app.use(`${appConfig.context}/api`, router);
 
-require('./routes/user.route')(router);
-require('./routes/auth.route')(router);
-require('./routes/trunk.route')(router);
-require('./routes/pilot.route')(router);
-require('./routes/location.route')(router);
-require('./routes/package.route')(router);
-require('./routes/shipping.route')(router);
+require('./routes/auth/user.route')(router);
+require('./routes/auth/auth.route')(router);
+require('./routes/shipping/trunk.route')(router);
+require('./routes/shipping/pilot.route')(router);
+require('./routes/shipping/package.route')(router);
+require('./routes/shipping/shipping.route')(router);
+require('./routes/common/location.route')(router);
 
 /**
  * Start
