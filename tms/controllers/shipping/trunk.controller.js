@@ -23,7 +23,6 @@ exports.createTrunk = async (req, res, next) => {
             pilot.assigned = true;
             await pilot.save();
         } else {
-            console.log(req.body);
             trunk = await Trunk.create({ model, brand, code, year, capacity });
             await trunk.save();
         }
