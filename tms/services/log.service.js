@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
-const Log = require('../models/Log');
-const User = require('../models/User');
+const Log = require('../models/auth/Log');
+const User = require('../models/auth/User');
 
 module.exports.saveLog = (req, action) => {
     const tk = jwt.decode(req.headers['authorization']);

@@ -21,7 +21,7 @@ exports.authenticateUser = (req, res, next) => {
         if ( !user ) {
             return next({ statusCode: 404, message: 'No existe el usuario ingresado' })
         } else {
-            const expiresInData = 2 * 60 * 60;
+            const expiresInData = 2 * 60 * 60; // 2 Horas de expiración
 
             if ( bcrypt.compareSync(userData.password, user.password) ) {
                 const token = jwt.sign({ id: user.id }, authConfig.key, { expiresIn: expiresInData })

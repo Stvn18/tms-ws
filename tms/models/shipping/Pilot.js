@@ -21,11 +21,15 @@ const pilotSchema = new Schema({
     identification: {
         type: String,
         required: true,
-        trim: true
+        trim: true,
+        unique: true
     },
     licenceType: {
         type: String,
         required: true
+    },
+    assigned: {
+        type: Boolean,
     }
 }, {
     collection: 'pilots',

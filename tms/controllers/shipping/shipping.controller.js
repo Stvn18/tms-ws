@@ -5,7 +5,7 @@ const Trunk = require('../../models/shipping/Trunk');
 const Package = require('../../models/shipping/Package');
 const Location = require('../../models/common/Location');
 
-const logService = require('../services/log.service');
+const logService = require('../../services/log.service');
 
 exports.registerShipping = async (req, res, next) => {
     if (!req.body) return next({ statusCode: 400, message: 'Datos incompletos' });
@@ -32,11 +32,6 @@ exports.registerShipping = async (req, res, next) => {
             return next({ statusCode: 400, message: 'Por favor ingresar al menos 1 paquete al envío' });
         }
 
-        packages.forEach(async element => {
-            package = await Package.findById(element._id);
-            return package;
-        });
-
         const shipping = await Shipping.create({
             trunk: trunkSaved,
             origin: originSaved,
@@ -45,9 +40,12 @@ exports.registerShipping = async (req, res, next) => {
             total: req.body.total,
             paymentType: req.body.paymentType,
             phoneReference: req.body.phoneReference,
-            quantityPackages: req.body.quantityPackages,
-            packages
+            quantityPackages: req.body.quantityPackages
         });
+        await shipping.save();
+
+        // Agrega los paquetes al envío
+        shipping.packages = packages;
         await shipping.save();
 
         // Agrega un nuevo envío al camión
@@ -91,7 +89,12 @@ exports.removePackage = async (req, res, next) => {
 exports.findShippingByStatus = async (req, res, next) => {
     try {
         if (!req.params) return next({ statusCode: 400, message: 'Datos incompletos' });
-        const shippings = await Shipping.find({ status: req.params.status });
+        const shippings = await Shipping
+            .find({ status: req.params.status })
+            .populate('trunk')
+            .populate('origin')
+            .populate('destination');
+
         res.json(shippings);
     } catch (e) {
         return next({ statusCode: 500, message: `Error al obtener el listado de envíos ${e}` });
@@ -102,7 +105,11 @@ exports.findById = async (req, res, next) => {
     try {
         if (!req.params) return next({ statusCode: 400, message: 'Datos incompletos' });
 
-        const shipping = await Shipping.findById(req.params.id);
+        const shipping = await Shipping.findById(req.params.id)
+            .populate('trunk')
+            .populate('origin')
+            .populate('destination')
+            .populate('packages');
         if (!shipping) return next({ statusCode: 404, message: 'No existe el envío consultado' });
 
         res.json(shipping);

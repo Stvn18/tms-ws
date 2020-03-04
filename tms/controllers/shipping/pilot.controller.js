@@ -14,14 +14,27 @@ exports.createPilot = async (req, res, next) => {
         logService.saveLog(req, `Registró al piloto ${pilot.name} ${pilot.lastName} en el sistema`);
 
         res.json(pilot);
-    } catch (e) {
-        return next({ statusCode: 500, message: `Error al registrar al piloto ${e}` });
+    } catch (error) {
+        if(error.code === 11000) {
+            return next({ statusCode: 400, message: `Ya existe este número de identificación` });
+        } else {
+            return next({ statusCode: 500, message: `Error al registrar al piloto ${e}` });
+        }
     }
 }
 
 exports.findPilots = async (_, res, next) => {
     try {
         const pilots = await Pilot.find();
+        res.json(pilots);
+    } catch ( e ) {
+        return next({ statusCode: 500, message: `Error al obtener el listado de pilotos ${e}` });
+    }
+}
+
+exports.findPilotsUnassigned = async (_, res, next) => {
+    try {
+        const pilots = await Pilot.find({ assigned: false });
         res.json(pilots);
     } catch ( e ) {
         return next({ statusCode: 500, message: `Error al obtener el listado de pilotos ${e}` });

@@ -57,7 +57,7 @@ exports.createLocation = async (req, res, next) => {
 
 exports.findLocations = async (_, res, next) => {
     try {
-        const locations = await Location.find();
+        const locations = await Location.find().populate('country').populate('department');
         res.json(locations);
     } catch (e) {
         return next({ statusCode: 500, message: `Error al obtener el listado de ubicaciones ${e}` });

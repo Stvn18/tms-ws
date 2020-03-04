@@ -9,12 +9,12 @@ exports.createPackage = async (req, res, next) => {
 
         const { weight, code, fragile, description } = req.body;
 
-        const package = await Package.create({ weight, code, fragile, description });
-        await package.save();
+        const pack = await Package.create({ weight, code, fragile, description });
+        await pack.save();
 
         logService.saveLog(req, `Registró el paquete con código ${code} en el sistema`);
 
-        res.json(package);
+        res.json(pack);
     } catch (e) {
         return next({ statusCode: 500, message: `Error al registrar el paquete ${e}` });
     }
