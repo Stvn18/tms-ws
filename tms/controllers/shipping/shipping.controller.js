@@ -20,13 +20,19 @@ exports.registerShipping = async (req, res, next) => {
         }
 
         const trunkSaved = await Trunk.findById(trunkId);
-        if (!trunkSaved) return next({ statusCode: 404, message: 'No existe el camión seleccionado' });
+        if (!trunkSaved) {
+            return next({ statusCode: 404, message: 'No existe el camión seleccionado' });
+        }
 
         const originSaved = await Location.findById(originId);
-        if (!originSaved) return next({ statusCode: 404, message: 'No existe el origen seleccionado' });
+        if (!originSaved) {
+            return next({ statusCode: 404, message: 'No existe el origen seleccionado' });
+        }
 
         const destinationSaved = await Location.findById(destinationId);
-        if (!destinationSaved) return next({ statusCode: 404, message: 'No existe el destino seleccionado' });
+        if (!destinationSaved) {
+            return next({ statusCode: 404, message: 'No existe el destino seleccionado' });
+        }
 
         if (!packages || packages.length === 0) {
             return next({ statusCode: 400, message: 'Por favor ingresar al menos 1 paquete al envío' });
@@ -40,17 +46,10 @@ exports.registerShipping = async (req, res, next) => {
             total: req.body.total,
             paymentType: req.body.paymentType,
             phoneReference: req.body.phoneReference,
-            quantityPackages: req.body.quantityPackages
+            quantityPackages: req.body.quantityPackages,
+            packages
         });
         await shipping.save();
-
-        // Agrega los paquetes al envío
-        shipping.packages = packages;
-        await shipping.save();
-
-        // Agrega un nuevo envío al camión
-        trunkSaved.shippings.push(shipping);
-        await trunkSaved.save();
 
         logService.saveLog(req, `Registró el envío No. ${shipping._id} en el sistema con destino a ${destinationSaved.comments}`);
 

@@ -28,11 +28,7 @@ const trunkSchema = new Schema({
     pilot: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Pilot'
-    },
-    shippings: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Shipping'
-    }]
+    }
 }, {
     collection: 'trunks',
     timestamps: true
